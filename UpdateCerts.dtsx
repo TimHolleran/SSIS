@@ -1,0 +1,3371 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/21/2018 10:58:53 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LITCHLWS8990"
+  DTS:CreatorName="COL\tholleran"
+  DTS:DTSID="{5C088B07-6E3C-465F-B270-164D0D9B93D8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3006.16"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="UpdateCerts"
+  DTS:PackageType="5"
+  DTS:VersionBuild="58"
+  DTS:VersionGUID="{FDAF321D-1550-4B34-ADDD-2F3F3000CCBA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[EnerGov]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{23EF3DBD-94E8-4230-9D8A-8F4CE68F4525}"
+      DTS:ObjectName="EnerGov">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=LDB03CHLIS;Initial Catalog=EnerGov_Prod;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HTTP Connection Manager]"
+      DTS:CreationName="HTTP"
+      DTS:DTSID="{07CF0BD3-574B-45C2-B412-B3964AAD8516}"
+      DTS:ObjectName="HTTP Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="http://data.wa.gov/api/views/m8qx-ubtq/rows.csv?accessType=DOWNLOAD&amp;bom=true&amp;format=true">
+          <DTS:HttpConnection
+            DTS:ServerURL="http://data.wa.gov/api/views/m8qx-ubtq/rows.csv?accessType=DOWNLOAD&amp;bom=true&amp;format=true"
+            DTS:TimeOut="180">
+            <DTS:Property
+              DTS:Name="ServerPassword"
+              Sensitive="1"
+              Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAkBREFf8GkEakzyhLZSASyAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACd3Pi1/dfRzTlXQXRC7G9zAAAAAASAAACgAAAAEAAAAD5ZsDOkCGCUo6InvqxUcnoIAAAAD4iodfKxH3oUAAAATVZNBFhpeJKQNqLHPKf8br42Or4</DTS:Property>
+            <DTS:Property
+              DTS:Name="ProxyPassword"
+              Sensitive="1"
+              Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAkBREFf8GkEakzyhLZSASyAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAYf7fQRKCzTOawpUqFKKNBAAAAAASAAACgAAAAEAAAAMHd9jDStSI95+GjwGnKJqYIAAAAihtzHBN/+3EUAAAAtdXFO5AV76c+/ynHywUXyUXqIeo</DTS:Property>
+          </DTS:HttpConnection>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[lnilog.txt]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{870876BE-FB7E-4355-B108-A77C72F9296E}"
+      DTS:ObjectName="lnilog.txt">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:FileUsageType="1"
+          DTS:ConnectionString="\\Col-db05\lni\lnilog.txt" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[StateFile]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{4E3EE7D0-C13A-4B6A-94A6-6F404A18D211}"
+      DTS:ObjectName="StateFile">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:FileUsageType="1"
+          DTS:ConnectionString="\\Col-db05\lni\StateFile.csv" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[StateSource]"
+      DTS:CreationName="FLATFILE"
+      DTS:Description="State LNI File"
+      DTS:DTSID="{C93FB47D-D61C-4D0E-9C85-E575B0D267C4}"
+      DTS:ObjectName="StateSource">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x0022_"
+          DTS:CodePage="65001"
+          DTS:ConnectionString="\\Col-db05\lni\StateFile.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="BusinessName"
+              DTS:DTSID="{18F3E209-D466-4703-8379-58B6ED7E9AA4}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ContractorLicenseNumber"
+              DTS:DTSID="{E11174BA-8EA9-491C-9964-A315C1B5F011}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ContractorLicenseTypeCode"
+              DTS:DTSID="{53D3F476-6B38-4230-9BAD-E89298D1635C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ContractorLicenseTypeCodeDesc"
+              DTS:DTSID="{FFE66AEB-297B-4CFE-B259-F6864614B3DC}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Address1"
+              DTS:DTSID="{A979C249-56F8-4C2D-BDD9-00A0ABAA2844}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Address2"
+              DTS:DTSID="{8EC19EC1-C40A-403E-8546-8200B60E19A5}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="City"
+              DTS:DTSID="{D42B35CD-AA01-42AF-8215-CFC15DB241AF}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="State"
+              DTS:DTSID="{BA785742-7E52-4413-A873-7D261B41C7CC}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="302"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Zip"
+              DTS:DTSID="{AC65431C-167F-4FD3-B9A8-2E2C450E0432}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="131"
+              DTS:DataPrecision="18"
+              DTS:TextQualified="True"
+              DTS:ObjectName="PhoneNumber"
+              DTS:DTSID="{14C36CCB-B115-4AAA-B632-0BE7A40F6228}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="135"
+              DTS:TextQualified="True"
+              DTS:ObjectName="LicenseEffectiveDate"
+              DTS:DTSID="{5CD374E7-6BF1-4656-BE2A-08FBBCF394B5}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="135"
+              DTS:TextQualified="True"
+              DTS:ObjectName="LicenseExpirationDate"
+              DTS:DTSID="{05E14090-8F77-485E-87A4-4956C102D89A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="BusinessTypeCode"
+              DTS:DTSID="{A0A52FFA-3765-4934-BCFB-7CDA5AFBBDDE}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="BusinessTypeCodeDesc"
+              DTS:DTSID="{9B94692B-3E97-45EB-8B65-0A2B6B533618}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="SpecialtyCode1"
+              DTS:DTSID="{DBB9C955-FF7B-4DF9-831D-D18984E1231D}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="SpecialtyCode1Desc"
+              DTS:DTSID="{C298EC19-7537-4C65-BC24-FAB393AA4138}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="SpecialtyCode2"
+              DTS:DTSID="{D0A1E6F5-CFBA-4773-95F5-E4039C464556}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="SpecialtyCode2Desc"
+              DTS:DTSID="{8A87C67D-67B5-406B-A1EE-2039AF82BD83}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="131"
+              DTS:DataPrecision="18"
+              DTS:TextQualified="True"
+              DTS:ObjectName="UBI"
+              DTS:DTSID="{05A7AA5D-9319-4650-A8FE-E3E641EA77BC}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="PrimaryPrincipalName"
+              DTS:DTSID="{EC8696E9-01C8-47A8-8092-7C2DAD4BE24A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="StatusCode"
+              DTS:DTSID="{717751AE-C8F7-4ECF-8DCA-BBB777DC7402}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="303"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ContractorLicenseStatus"
+              DTS:DTSID="{9E444CF9-81B7-4C1D-A875-FBDD6E758A07}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000A_"
+              DTS:DataType="135"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ContractorLicenseSuspendDate"
+              DTS:DTSID="{9B43B20A-67E9-47BE-8968-74CA89C2A4C1}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:LogProviders>
+    <DTS:LogProvider
+      DTS:ConfigString="lnilog.txt"
+      DTS:CreationName="Microsoft.LogProviderTextFile"
+      DTS:Description="Writes log entries for events to a CSV file"
+      DTS:DTSID="{F293BAE1-C4C2-4D38-993B-C169BBE5283B}"
+      DTS:ObjectName="SSIS log provider for Text files1">
+      <DTS:ObjectData>
+        <InnerObject />
+      </DTS:ObjectData>
+    </DTS:LogProvider>
+  </DTS:LogProviders>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{22239510-2658-4B12-A0CD-45B7EBC96DA1}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AnyRecords">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6FFE7390-3A58-4320-91EC-010C4454B2C7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DownloadURL">
+      <DTS:VariableValue
+        DTS:DataType="8">http://data.wa.gov/api/views/m8qx-ubtq/rows.csv?accessType=DOWNLOAD&amp;bom=true&amp;format=true</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7E2C264D-9FB5-4376-B58F-4B9B736E7A83}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileDestination">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Users\tholleran\Documents\energovIntegration</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3B43D670-3E05-4754-80F4-30B28690675F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordCount">
+      <DTS:VariableValue
+        DTS:DataType="8">Select count(LC.LICENSENUMBER) FROM COLICENSECERTIFICATION LC left outer join  LNI_STAGING LNI on LC.LICENSENUMBER = LNI.ContractorLicenseNumber  where LC.EXPIREDATE &lt;&gt;  LNI.LicenseExpirationDate or LC.EXPIREDATE &lt;=getdate()+90</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:LoggingOptions
+    DTS:FilterKind="0"
+    DTS:LoggingMode="1">
+    <DTS:Property
+      DTS:DataType="8"
+      DTS:Name="EventFilter">2,7,OnError,12,OnTaskFailed</DTS:Property>
+    <DTS:Property
+      DTS:EventName="Diagnostic"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="DiagnosticEx"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnError"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnExecStatusChanged"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnInformation"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePostComponentCall"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePostEndOfRowset"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePostPrimeOutput"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePreComponentCall"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePreEndOfRowset"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePrePrimeOutput"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelineRowsSent"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPostExecute"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPostValidate"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPreExecute"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPreValidate"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnProgress"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnQueryCancel"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnTaskFailed"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnVariableValueChanged"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnWarning"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:SelectedLogProviders>
+      <DTS:SelectedLogProvider
+        DTS:InstanceID="{F293BAE1-C4C2-4D38-993B-C169BBE5283B}" />
+    </DTS:SelectedLogProviders>
+  </DTS:LoggingOptions>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Download file"
+      DTS:CreationName="Microsoft.ScriptTask"
+      DTS:Description="Script Task"
+      DTS:DTSID="{046C2FBE-E6C4-4437-BF71-2023B0D03587}"
+      DTS:ExecutableType="Microsoft.ScriptTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Download file"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <ScriptProject
+          Name="ST_4b3d5318894f4cdd884f4c63837ed409"
+          VSTAMajorVersion="14"
+          VSTAMinorVersion="0"
+          Language="CSharp"
+          ReadOnlyVariables="User::DownloadURL,User::FileDestination">
+          <ProjectItem
+            Name="ST_4b3d5318894f4cdd884f4c63837ed409.csproj"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{e213d977-fa70-41ce-bac0-74b95faa385d}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ST_4b3d5318894f4cdd884f4c63837ed409</RootNamespace>
+    <AssemblyName>ST_4b3d5318894f4cdd884f4c63837ed409</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.ManagedDTS, Version=13.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.ScriptTask, Version=13.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptMain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <!-- Include the build rules for a C# project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" />
+        <Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host>
+        <ProjectClient>
+          <HostIdentifier>SSIS_ST130</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Resources.resx"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Settings.get_Default():ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Sett" +
+    "ings")]
+
+namespace ST_4b3d5318894f4cdd884f4c63837ed409.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <ProjectItem
+            Name="ScriptMain.cs"
+            Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
+/* The Script Task allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services control flow. 
+ * 
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script task. */
+#endregion
+
+
+#region Namespaces
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Runtime;
+using System.Windows.Forms;
+using System.Net;
+
+#endregion
+
+namespace ST_4b3d5318894f4cdd884f4c63837ed409
+{
+    /// <summary>
+    /// ScriptMain is the entry point class of the script.  Do not change the name, attributes,
+    /// or parent of this class.
+    /// </summary>
+	[Microsoft.SqlServer.Dts.Tasks.ScriptTask.SSISScriptTaskEntryPointAttribute]
+	public partial class ScriptMain : Microsoft.SqlServer.Dts.Tasks.ScriptTask.VSTARTScriptObjectModelBase
+	{
+        #region Help:  Using Integration Services variables and parameters in a script
+        /* To use a variable in this script, first ensure that the variable has been added to 
+         * either the list contained in the ReadOnlyVariables property or the list contained in 
+         * the ReadWriteVariables property of this script task, according to whether or not your
+         * code needs to write to the variable.  To add the variable, save this script, close this instance of
+         * Visual Studio, and update the ReadOnlyVariables and 
+         * ReadWriteVariables properties in the Script Transformation Editor window.
+         * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+         * 
+         * Example of reading from a variable:
+         *  DateTime startTime = (DateTime) Dts.Variables["System::StartTime"].Value;
+         * 
+         * Example of writing to a variable:
+         *  Dts.Variables["User::myStringVariable"].Value = "new value";
+         * 
+         * Example of reading from a package parameter:
+         *  int batchId = (int) Dts.Variables["$Package::batchId"].Value;
+         *  
+         * Example of reading from a project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].Value;
+         * 
+         * Example of reading from a sensitive project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].GetSensitiveValue();
+         * */
+
+        #endregion
+
+        #region Help:  Firing Integration Services events from a script
+        /* This script task can fire events for logging purposes.
+         * 
+         * Example of firing an error event:
+         *  Dts.Events.FireError(18, "Process Values", "Bad value", "", 0);
+         * 
+         * Example of firing an information event:
+         *  Dts.Events.FireInformation(3, "Process Values", "Processing has started", "", 0, ref fireAgain)
+         * 
+         * Example of firing a warning event:
+         *  Dts.Events.FireWarning(14, "Process Values", "No values received for input", "", 0);
+         * */
+        #endregion
+
+        #region Help:  Using Integration Services connection managers in a script
+        /* Some types of connection managers can be used in this script task.  See the topic 
+         * "Working with Connection Managers Programatically" for details.
+         * 
+         * Example of using an ADO.Net connection manager:
+         *  object rawConnection = Dts.Connections["Sales DB"].AcquireConnection(Dts.Transaction);
+         *  SqlConnection myADONETConnection = (SqlConnection)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Sales DB"].ReleaseConnection(rawConnection);
+         *
+         * Example of using a File connection manager
+         *  object rawConnection = Dts.Connections["Prices.zip"].AcquireConnection(Dts.Transaction);
+         *  string filePath = (string)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Prices.zip"].ReleaseConnection(rawConnection);
+         * */
+        #endregion
+
+
+		/// <summary>
+        /// This method is called when this script task executes in the control flow.
+        /// Before returning from this method, set the value of Dts.TaskResult to indicate success or failure.
+        /// To open Help, press F1.
+        /// </summary>
+		public void Main()
+        {
+            try
+            {
+                // Logging start of download
+                bool fireAgain = true;
+                Dts.Events.FireInformation(0, "Download File", "Start downloading " + Dts.Connections["HTTP Connection Manager"].ConnectionString, string.Empty, 0, ref fireAgain);
+
+                // Get your newly added HTTP Connection Manager
+                Object mySSISConnection = Dts.Connections["HTTP Connection Manager"].AcquireConnection(null);
+
+                // Create a new connection
+                HttpClientConnection myConnection = new HttpClientConnection(mySSISConnection);
+
+                // Download file and use the Flat File Connectionstring (D:\SourceFiles\Products.csv)
+                // to save the file (and replace the existing file)
+                myConnection.DownloadFile(Dts.Connections["StateFile"].ConnectionString, true);
+
+                // Logging end of download
+                Dts.Events.FireInformation(0, "Download File", "Finished downloading " + Dts.Connections["StateFile"].ConnectionString, string.Empty, 0, ref fireAgain);
+
+                // Quit Script Task succesful
+                Dts.TaskResult = (int)ScriptResults.Success;
+            }
+            catch (Exception ex)
+            {
+                // Logging why download failed
+                Dts.Events.FireError(0, "Download File", "Download failed: " + ex.Message, string.Empty, 0);
+
+                // Quit Script Task unsuccesful
+                Dts.TaskResult = (int)ScriptResults.Failure;
+            }
+        }
+
+        #region ScriptResults declaration
+        /// <summary>
+        /// This enum provides a convenient shorthand within the scope of this class for setting the
+        /// result of the script.
+        /// 
+        /// This code was generated automatically.
+        /// </summary>
+        enum ScriptResults
+        {
+            Success = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Success,
+            Failure = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Failure
+        };
+        #endregion
+
+	}
+}]]></ProjectItem>
+          <ProjectItem
+            Name="Project"
+            Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+	<msb:PropertyGroup>
+		<msb:CodeName>ST_4b3d5318894f4cdd884f4c63837ed409</msb:CodeName>
+		<msb:Language>msBuild</msb:Language>
+		<msb:DisplayName>ST_4b3d5318894f4cdd884f4c63837ed409</msb:DisplayName>
+		<msb:ProjectId>{1DF662FF-0A3B-457E-B81C-F7518FF7E9C0}</msb:ProjectId>
+	</msb:PropertyGroup>
+	<msb:ItemGroup>
+		<msb:Project Include="ST_4b3d5318894f4cdd884f4c63837ed409.csproj"/>
+		<msb:File Include="Properties\Settings.settings"/>
+		<msb:File Include="Properties\AssemblyInfo.cs"/>
+		<msb:File Include="Properties\Resources.resx"/>
+		<msb:File Include="Properties\Resources.Designer.cs"/>
+		<msb:File Include="Properties\Settings.Designer.cs"/>
+		<msb:File Include="ScriptMain.cs"/>
+	</msb:ItemGroup>
+</c:Project>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\AssemblyInfo.cs"
+            Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_4b3d5318894f4cdd884f4c63837ed409")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ST_4b3d5318894f4cdd884f4c63837ed409")]
+[assembly: AssemblyCopyright("Copyright @  2018")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.settings"
+            Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Resources.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace ST_4b3d5318894f4cdd884f4c63837ed409.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <BinaryItem
+            Name="ST_4b3d5318894f4cdd884f4c63837ed409.dll">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAABQRQAATAEDAHVsolsAAAAAAAAAAOAAIiALATAAABIAAAAIAAAAAAAATjAA
+AAAgAAAAQAAAAAAAEAAgAAAAAgAABAAAAAAAAAAGAAAAAAAAAACAAAAAAgAAAAAAAAMAYIUAABAA
+ABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAPwvAABPAAAAAEAAAHgEAAAAAAAAAAAAAAAAAAAA
+AAAAAGAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAAVBAAAAAgAAAAEgAAAAIA
+AAAAAAAAAAAAAAAAACAAAGAucnNyYwAAAHgEAAAAQAAAAAYAAAAUAAAAAAAAAAAAAAAAAABAAABA
+LnJlbG9jAAAMAAAAAGAAAAACAAAAGgAAAAAAAAAAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAAAw
+MAAAAAAAAEgAAAACAAUA6CEAAFwNAAABAAAAAAAAAEQvAAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAABswBwARAQAAAQAAERcKAigQAAAKbxEAAAoWcgEAAHByHQAA
+cAIoEAAACm8SAAAKckMAAHBvEwAACm8UAAAKKBUAAAp+FgAAChYSAG8XAAAKAigQAAAKbxIAAApy
+QwAAcG8TAAAKFG8YAAAKcxkAAAoCKBAAAApvEgAACnJzAABwbxMAAApvFAAAChdvGgAACgIoEAAA
+Cm8RAAAKFnIBAABwcocAAHACKBAAAApvEgAACnJzAABwbxMAAApvFAAACigVAAAKfhYAAAoWEgBv
+FwAACgIoEAAAChZvGwAACt48CwIoEAAACm8RAAAKFnIBAABwcrMAAHAHbxwAAAooFQAACn4WAAAK
+Fm8dAAAKJgIoEAAAChdvGwAACt4AKgAAAAEQAAAAAAAA1NQAPA8AAAEeAigeAAAKKh4CKB8AAAoq
+rn4BAAAELR5y1wAAcNADAAACKCAAAApvIQAACnMiAAAKgAEAAAR+AQAABCoafgIAAAQqHgKAAgAA
+BCoafgMAAAQqHgIoIwAACioucwgAAAaAAwAABCoAAEJTSkIBAAEAAAAAAAwAAAB2NC4wLjMwMzE5
+AAAAAAUAbAAAAAQEAAAjfgAAcAQAAPgFAAAjU3RyaW5ncwAAAABoCgAATAEAACNVUwC0CwAAEAAA
+ACNHVUlEAAAAxAsAAJgBAAAjQmxvYgAAAAAAAAACAAABVx2iAQkDAAAA+gEzABYAAAEAAAAhAAAA
+BQAAAAYAAAAJAAAAAQAAACMAAAACAAAAEAAAAAEAAAACAAAAAwAAAAQAAAABAAAABAAAAAEAAAAB
+AAAAAACHAwEAAAAAAAYANQLIBAYAxALIBAYAgQG1BA8APAUAAAYArgEVBAYAGAIVBAYA+QEVBAYA
+qwIVBAYAVQIVBAYAbgIVBAYAxQEVBAYA4AHoAgoAiQI2AwoAAAE2AwYATgS4AwYAvwO4AwYAZAG1
+BAYAwwW4AwYAaAToBAYAWAQABA4ANAFxAw4AlQFxAw4AHAHrAwYASQHIBAoAXwM2AwoAigQ2AxIA
+hwWrABIAeASrAAYAEAO4AxIAOQSrAAYAywC4AwYAegC4AwYA6QUVBAAAAAAlAAAAAAABAAEAAQAQ
+ANADAQA5AAEAAQAAABAA7wRLBUkAAQADAAABEAB6BUsFXQADAAcAAwEAAKMFAABBAAQACgARAMQD
+mQARAPAAnQARAF4AoQAGBk0ApQBWgJMFqABWgNAAqABQIAAAAACGANYDBgABAIAhAAAAAIYYqAQG
+AAEAiCEAAAAAgxioBAYAAQCQIQAAAACTCGQErAABALwhAAAAAJMI2ACxAAEAwyEAAAAAkwjkALYA
+AQDLIQAAAACWCMoFvAACANIhAAAAAIYYqAQGAAIA2iEAAAAAkRiuBMEAAgAAAAEA4gIJAKgEAQAR
+AKgEBgAZAKgECgApAKgEEAAxAKgEEAA5AKgEEABBAKgEEABJAKgEEABRAKgEEABZAKgEEABhAKgE
+EABpAKgEBgCJAKgEBgCxAKgEFQDBAKgEBgBxAJsFIQDJALEFJgDJAIMFKwDZAK8DMADhAAIDNgDp
+ALwFOgDpAPIFQADRANsDQwDhACcETgDxAKgEUwDxAJ4AWADJANYFAQB5AG4ANgDRAJ4EXgBxAKgE
+BgCRAKgEBgD5AIwAZwD5AOUFbwCZAKgEdQC5AKgEBgAIABQAjwAIABgAlAApAHMA/AAuAAsA1AAu
+ABMA3QAuABsA/AAuACMABQEuACsALgEuADMALgEuADsALgEuAEMABQEuAEsANAEuAFMALgEuAFsA
+SwFDAGMAlABJAHMA/ABhAHsAlABjAGsAlAAbAAMAAQAEAAMAAABoBMUAAAD4AMoAAADOBc8AAgAE
+AAMAAgAFAAUAAQAGAAUAAgAHAAcABIAAAAEAAAC0GkI8AAAAAAAAAQAAAAQAAAAAAAAAAAAAAH0A
+VQAAAAAADQAAAAAAAAAAAAAAhgAXAwAAAAAEAAAAAAAAAAAAAAB9ALgDAAAAAA0AAAAAAAAAAAAA
+AIYALgAAAAAAAAAAAAEAAAD5BAAABQACAAAAAFNUXzRiM2Q1MzE4ODk0ZjRjZGQ4ODRmNGM2Mzgz
+N2VkNDA5ADxNb2R1bGU+AE1pY3Jvc29mdC5TcWxTZXJ2ZXIuTWFuYWdlZERUUwB2YWx1ZV9fAG1z
+Y29ybGliAGRlZmF1bHRJbnN0YW5jZQBnZXRfTWVzc2FnZQBSdW50aW1lVHlwZUhhbmRsZQBHZXRU
+eXBlRnJvbUhhbmRsZQBEb3dubG9hZEZpbGUATWljcm9zb2Z0LlNxbFNlcnZlci5EdHMuUnVudGlt
+ZQBUeXBlAEZhaWx1cmUAZ2V0X0N1bHR1cmUAc2V0X0N1bHR1cmUAcmVzb3VyY2VDdWx0dXJlAFZT
+VEFSVFNjcmlwdE9iamVjdE1vZGVsQmFzZQBBcHBsaWNhdGlvblNldHRpbmdzQmFzZQBFZGl0b3JC
+cm93c2FibGVTdGF0ZQBDb21waWxlckdlbmVyYXRlZEF0dHJpYnV0ZQBEZWJ1Z2dlck5vblVzZXJD
+b2RlQXR0cmlidXRlAERlYnVnZ2FibGVBdHRyaWJ1dGUARWRpdG9yQnJvd3NhYmxlQXR0cmlidXRl
+AEFzc2VtYmx5VGl0bGVBdHRyaWJ1dGUAQXNzZW1ibHlUcmFkZW1hcmtBdHRyaWJ1dGUAVGFyZ2V0
+RnJhbWV3b3JrQXR0cmlidXRlAEFzc2VtYmx5Q29uZmlndXJhdGlvbkF0dHJpYnV0ZQBBc3NlbWJs
+eURlc2NyaXB0aW9uQXR0cmlidXRlAENvbXBpbGF0aW9uUmVsYXhhdGlvbnNBdHRyaWJ1dGUAQXNz
+ZW1ibHlQcm9kdWN0QXR0cmlidXRlAEFzc2VtYmx5Q29weXJpZ2h0QXR0cmlidXRlAFNTSVNTY3Jp
+cHRUYXNrRW50cnlQb2ludEF0dHJpYnV0ZQBBc3NlbWJseUNvbXBhbnlBdHRyaWJ1dGUAUnVudGlt
+ZUNvbXBhdGliaWxpdHlBdHRyaWJ1dGUAdmFsdWUAU3lzdGVtLlJ1bnRpbWUuVmVyc2lvbmluZwBn
+ZXRfQ29ubmVjdGlvblN0cmluZwBNaWNyb3NvZnQuU3FsU2VydmVyLlNjcmlwdFRhc2sATWljcm9z
+b2Z0LlNxbFNlcnZlci5EdHMuVGFza3MuU2NyaXB0VGFzawBTY3JpcHRPYmplY3RNb2RlbABTeXN0
+ZW0uQ29tcG9uZW50TW9kZWwAU1RfNGIzZDUzMTg4OTRmNGNkZDg4NGY0YzYzODM3ZWQ0MDkuZGxs
+AGdldF9JdGVtAFN5c3RlbQBFbnVtAHJlc291cmNlTWFuAFNjcmlwdE1haW4ARmlyZUluZm9ybWF0
+aW9uAFN5c3RlbS5Db25maWd1cmF0aW9uAFN5c3RlbS5HbG9iYWxpemF0aW9uAFN5c3RlbS5SZWZs
+ZWN0aW9uAEFjcXVpcmVDb25uZWN0aW9uAEh0dHBDbGllbnRDb25uZWN0aW9uAEV4Y2VwdGlvbgBD
+dWx0dXJlSW5mbwBnZXRfUmVzb3VyY2VNYW5hZ2VyAENvbm5lY3Rpb25NYW5hZ2VyAEV2ZW50c09i
+amVjdFdyYXBwZXIARmlyZUVycm9yAC5jdG9yAC5jY3RvcgBTeXN0ZW0uRGlhZ25vc3RpY3MAU3lz
+dGVtLlJ1bnRpbWUuQ29tcGlsZXJTZXJ2aWNlcwBTeXN0ZW0uUmVzb3VyY2VzAFNUXzRiM2Q1MzE4
+ODk0ZjRjZGQ4ODRmNGM2MzgzN2VkNDA5LlByb3BlcnRpZXMuUmVzb3VyY2VzLnJlc291cmNlcwBE
+ZWJ1Z2dpbmdNb2RlcwBTVF80YjNkNTMxODg5NGY0Y2RkODg0ZjRjNjM4MzdlZDQwOS5Qcm9wZXJ0
+aWVzAFNldHRpbmdzAGdldF9Db25uZWN0aW9ucwBTdWNjZXNzAGdldF9EdHMAU2NyaXB0UmVzdWx0
+cwBnZXRfRXZlbnRzAENvbmNhdABPYmplY3QAZ2V0X0RlZmF1bHQAc2V0X1Rhc2tSZXN1bHQAZ2V0
+X0Fzc2VtYmx5AEVtcHR5AAAbRABvAHcAbgBsAG8AYQBkACAARgBpAGwAZQAAJVMAdABhAHIAdAAg
+AGQAbwB3AG4AbABvAGEAZABpAG4AZwAgAAAvSABUAFQAUAAgAEMAbwBuAG4AZQBjAHQAaQBvAG4A
+IABNAGEAbgBhAGcAZQByAAATUwB0AGEAdABlAEYAaQBsAGUAACtGAGkAbgBpAHMAaABlAGQAIABk
+AG8AdwBuAGwAbwBhAGQAaQBuAGcAIAAAI0QAbwB3AG4AbABvAGEAZAAgAGYAYQBpAGwAZQBkADoA
+IAAAcVMAVABfADQAYgAzAGQANQAzADEAOAA4ADkANABmADQAYwBkAGQAOAA4ADQAZgA0AGMANgAz
+ADgAMwA3AGUAZAA0ADAAOQAuAFAAcgBvAHAAZQByAHQAaQBlAHMALgBSAGUAcwBvAHUAcgBjAGUA
+cwAAAAAAAJRl04Os/0OY2heVYfLNHAAEIAEBCAMgAAEFIAEBEREEIAEBDgUgAQERVQUHAgISPQQg
+ABJlBCAAEmkEIAASbQUgARJxHAMgAA4FAAIODg4CBg4KIAYBCA4ODggQAgQgARwcBCABARwFIAIB
+DgIIIAUCCA4ODggHAAESfRGAgQUgABKAhQcgAgEOEoCFCLd6XFYZNOCJCImEXc2AgMyRBAAAAAAE
+AQAAAAMGEk0DBhJRAwYSEAIGCAMGERQEAAASTQQAABJRBQABARJRBAAAEhADAAABBAgAEk0ECAAS
+UQQIABIQCAEACAAAAAAAHgEAAQBUAhZXcmFwTm9uRXhjZXB0aW9uVGhyb3dzAQgBAAIAAAAAACgB
+ACNTVF80YjNkNTMxODg5NGY0Y2RkODg0ZjRjNjM4MzdlZDQwOQAABQEAAAAAFgEAEUNvcHlyaWdo
+dCBAICAyMDE4AABJAQAaLk5FVEZyYW1ld29yayxWZXJzaW9uPXY0LjUBAFQOFEZyYW1ld29ya0Rp
+c3BsYXlOYW1lEi5ORVQgRnJhbWV3b3JrIDQuNQAAALQAAADOyu++AQAAAJEAAABsU3lzdGVtLlJl
+c291cmNlcy5SZXNvdXJjZVJlYWRlciwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVy
+ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5I1N5c3RlbS5SZXNvdXJj
+ZXMuUnVudGltZVJlc291cmNlU2V0AgAAAAAAAAAAAAAAUEFEUEFEULQAAAAkMAAAAAAAAAAAAAA+
+MAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAAAAAAAAAAAAAAAABfQ29yRGxsTWFpbgBtc2Nv
+cmVlLmRsbAAAAAAA/yUAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAEAEAAAABgAAIAAAAAAAAAAAAAAAAAAAAEAAQAAADAAAIAAAAAAAAAAAAAAAAAAAAEAAAAA
+AEgAAABYQAAAGgQAAAAAAAAAAAAAGgQ0AAAAVgBTAF8AVgBFAFIAUwBJAE8ATgBfAEkATgBGAE8A
+AAAAAL0E7/4AAAEAAAABAEI8tBoAAAEAQjy0Gj8AAAAAAAAABAAAAAIAAAAAAAAAAAAAAAAAAABE
+AAAAAQBWAGEAcgBGAGkAbABlAEkAbgBmAG8AAAAAACQABAAAAFQAcgBhAG4AcwBsAGEAdABpAG8A
+bgAAAAAAAACwBHoDAAABAFMAdAByAGkAbgBnAEYAaQBsAGUASQBuAGYAbwAAAFYDAAABADAAMAAw
+ADAAMAA0AGIAMAAAABoAAQABAEMAbwBtAG0AZQBuAHQAcwAAAAAAAAAiAAEAAQBDAG8AbQBwAGEA
+bgB5AE4AYQBtAGUAAAAAAAAAAABwACQAAQBGAGkAbABlAEQAZQBzAGMAcgBpAHAAdABpAG8AbgAA
+AAAAUwBUAF8ANABiADMAZAA1ADMAMQA4ADgAOQA0AGYANABjAGQAZAA4ADgANABmADQAYwA2ADMA
+OAAzADcAZQBkADQAMAA5AAAAPgAPAAEARgBpAGwAZQBWAGUAcgBzAGkAbwBuAAAAAAAxAC4AMAAu
+ADYAOAAzADYALgAxADUANAAyADYAAAAAAHAAKAABAEkAbgB0AGUAcgBuAGEAbABOAGEAbQBlAAAA
+UwBUAF8ANABiADMAZAA1ADMAMQA4ADgAOQA0AGYANABjAGQAZAA4ADgANABmADQAYwA2ADMAOAAz
+ADcAZQBkADQAMAA5AC4AZABsAGwAAABIABIAAQBMAGUAZwBhAGwAQwBvAHAAeQByAGkAZwBoAHQA
+AABDAG8AcAB5AHIAaQBnAGgAdAAgAEAAIAAgADIAMAAxADgAAAAqAAEAAQBMAGUAZwBhAGwAVABy
+AGEAZABlAG0AYQByAGsAcwAAAAAAAAAAAHgAKAABAE8AcgBpAGcAaQBuAGEAbABGAGkAbABlAG4A
+YQBtAGUAAABTAFQAXwA0AGIAMwBkADUAMwAxADgAOAA5ADQAZgA0AGMAZABkADgAOAA0AGYANABj
+ADYAMwA4ADMANwBlAGQANAAwADkALgBkAGwAbAAAAGgAJAABAFAAcgBvAGQAdQBjAHQATgBhAG0A
+ZQAAAAAAUwBUAF8ANABiADMAZAA1ADMAMQA4ADgAOQA0AGYANABjAGQAZAA4ADgANABmADQAYwA2
+ADMAOAAzADcAZQBkADQAMAA5AAAAQgAPAAEAUAByAG8AZAB1AGMAdABWAGUAcgBzAGkAbwBuAAAA
+MQAuADAALgA2ADgAMwA2AC4AMQA1ADQAMgA2AAAAAABGAA8AAQBBAHMAcwBlAG0AYgBsAHkAIABW
+AGUAcgBzAGkAbwBuAAAAMQAuADAALgA2ADgAMwA2AC4AMQA1ADQAMgA2AAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAADAAAAFAwAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</BinaryItem>
+        </ScriptProject>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Download file 1"
+      DTS:CreationName="Microsoft.ScriptTask"
+      DTS:Description="Script Task"
+      DTS:DTSID="{8da3a85e-2d79-4deb-a5ad-bddb57a3edbc}"
+      DTS:ExecutableType="Microsoft.ScriptTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Download file 1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <ScriptProject
+          Name="ST_ab06f795cd0f45908a19a9e462de8683"
+          VSTAMajorVersion="14"
+          VSTAMinorVersion="0"
+          Language="CSharp"
+          ReadOnlyVariables="User::DownloadURL,User::FileDestination">
+          <ProjectItem
+            Name="ScriptMain.cs"
+            Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
+/* The Script Task allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services control flow. 
+ * 
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script task. */
+#endregion
+
+
+#region Namespaces
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Runtime;
+using System.Windows.Forms;
+using System.Net;
+
+#endregion
+
+namespace ST_4b3d5318894f4cdd884f4c63837ed409
+{
+    /// <summary>
+    /// ScriptMain is the entry point class of the script.  Do not change the name, attributes,
+    /// or parent of this class.
+    /// </summary>
+	[Microsoft.SqlServer.Dts.Tasks.ScriptTask.SSISScriptTaskEntryPointAttribute]
+	public partial class ScriptMain : Microsoft.SqlServer.Dts.Tasks.ScriptTask.VSTARTScriptObjectModelBase
+	{
+        #region Help:  Using Integration Services variables and parameters in a script
+        /* To use a variable in this script, first ensure that the variable has been added to 
+         * either the list contained in the ReadOnlyVariables property or the list contained in 
+         * the ReadWriteVariables property of this script task, according to whether or not your
+         * code needs to write to the variable.  To add the variable, save this script, close this instance of
+         * Visual Studio, and update the ReadOnlyVariables and 
+         * ReadWriteVariables properties in the Script Transformation Editor window.
+         * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+         * 
+         * Example of reading from a variable:
+         *  DateTime startTime = (DateTime) Dts.Variables["System::StartTime"].Value;
+         * 
+         * Example of writing to a variable:
+         *  Dts.Variables["User::myStringVariable"].Value = "new value";
+         * 
+         * Example of reading from a package parameter:
+         *  int batchId = (int) Dts.Variables["$Package::batchId"].Value;
+         *  
+         * Example of reading from a project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].Value;
+         * 
+         * Example of reading from a sensitive project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].GetSensitiveValue();
+         * */
+
+        #endregion
+
+        #region Help:  Firing Integration Services events from a script
+        /* This script task can fire events for logging purposes.
+         * 
+         * Example of firing an error event:
+         *  Dts.Events.FireError(18, "Process Values", "Bad value", "", 0);
+         * 
+         * Example of firing an information event:
+         *  Dts.Events.FireInformation(3, "Process Values", "Processing has started", "", 0, ref fireAgain)
+         * 
+         * Example of firing a warning event:
+         *  Dts.Events.FireWarning(14, "Process Values", "No values received for input", "", 0);
+         * */
+        #endregion
+
+        #region Help:  Using Integration Services connection managers in a script
+        /* Some types of connection managers can be used in this script task.  See the topic 
+         * "Working with Connection Managers Programatically" for details.
+         * 
+         * Example of using an ADO.Net connection manager:
+         *  object rawConnection = Dts.Connections["Sales DB"].AcquireConnection(Dts.Transaction);
+         *  SqlConnection myADONETConnection = (SqlConnection)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Sales DB"].ReleaseConnection(rawConnection);
+         *
+         * Example of using a File connection manager
+         *  object rawConnection = Dts.Connections["Prices.zip"].AcquireConnection(Dts.Transaction);
+         *  string filePath = (string)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Prices.zip"].ReleaseConnection(rawConnection);
+         * */
+        #endregion
+
+
+		/// <summary>
+        /// This method is called when this script task executes in the control flow.
+        /// Before returning from this method, set the value of Dts.TaskResult to indicate success or failure.
+        /// To open Help, press F1.
+        /// </summary>
+		public void Main()
+        {
+            try
+            {
+                // Logging start of download
+                bool fireAgain = true;
+                Dts.Events.FireInformation(0, "Download File", "Start downloading " + Dts.Connections["HTTP Connection Manager"].ConnectionString, string.Empty, 0, ref fireAgain);
+
+                // Get your newly added HTTP Connection Manager
+                Object mySSISConnection = Dts.Connections["HTTP Connection Manager"].AcquireConnection(null);
+
+                // Create a new connection
+                HttpClientConnection myConnection = new HttpClientConnection(mySSISConnection);
+
+                // Download file and use the Flat File Connectionstring (D:\SourceFiles\Products.csv)
+                // to save the file (and replace the existing file)
+                myConnection.DownloadFile(Dts.Connections["StateFile"].ConnectionString, true);
+
+                // Logging end of download
+                Dts.Events.FireInformation(0, "Download File", "Finished downloading " + Dts.Connections["StateFile"].ConnectionString, string.Empty, 0, ref fireAgain);
+
+                // Quit Script Task succesful
+                Dts.TaskResult = (int)ScriptResults.Success;
+            }
+            catch (Exception ex)
+            {
+                // Logging why download failed
+                Dts.Events.FireError(0, "Download File", "Download failed: " + ex.Message, string.Empty, 0);
+
+                // Quit Script Task unsuccesful
+                Dts.TaskResult = (int)ScriptResults.Failure;
+            }
+        }
+
+        #region ScriptResults declaration
+        /// <summary>
+        /// This enum provides a convenient shorthand within the scope of this class for setting the
+        /// result of the script.
+        /// 
+        /// This code was generated automatically.
+        /// </summary>
+        enum ScriptResults
+        {
+            Success = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Success,
+            Failure = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Failure
+        };
+        #endregion
+
+	}
+}]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Resources.resx"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.settings"
+            Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
+          <ProjectItem
+            Name="ST_ab06f795cd0f45908a19a9e462de8683.csproj"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{e213d977-fa70-41ce-bac0-74b95faa385d}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>ST_4b3d5318894f4cdd884f4c63837ed409</RootNamespace><AssemblyName>ST_ab06f795cd0f45908a19a9e462de8683</AssemblyName><TargetFrameworkVersion>v4.5</TargetFrameworkVersion><FileAlignment>512</FileAlignment><ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch><TargetFrameworkProfile></TargetFrameworkProfile></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.ManagedDTS, Version=13.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.ScriptTask, Version=13.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile><Compile Include="ScriptMain.cs"><SubType>Code</SubType></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" /><Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host><ProjectClient><HostIdentifier>SSIS_ST130</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></ProjectItem>
+          <ProjectItem
+            Name="Project"
+            Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+	<msb:PropertyGroup>
+		<msb:CodeName>ST_4b3d5318894f4cdd884f4c63837ed409</msb:CodeName>
+		<msb:Language>msBuild</msb:Language>
+		<msb:DisplayName>ST_4b3d5318894f4cdd884f4c63837ed409</msb:DisplayName>
+		<msb:ProjectId>{1DF662FF-0A3B-457E-B81C-F7518FF7E9C0}</msb:ProjectId>
+	</msb:PropertyGroup>
+	<msb:ItemGroup>
+		<msb:Project Include="ST_ab06f795cd0f45908a19a9e462de8683.csproj"/>
+		<msb:File Include="Properties\Settings.settings"/>
+		<msb:File Include="Properties\AssemblyInfo.cs"/>
+		<msb:File Include="Properties\Resources.resx"/>
+		<msb:File Include="Properties\Resources.Designer.cs"/>
+		<msb:File Include="Properties\Settings.Designer.cs"/>
+		<msb:File Include="ScriptMain.cs"/>
+	</msb:ItemGroup>
+</c:Project>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Settings.get_Default():ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Sett" +
+    "ings")]
+
+namespace ST_4b3d5318894f4cdd884f4c63837ed409.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\AssemblyInfo.cs"
+            Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_4b3d5318894f4cdd884f4c63837ed409")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ST_4b3d5318894f4cdd884f4c63837ed409")]
+[assembly: AssemblyCopyright("Copyright @  2018")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Resources.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace ST_4b3d5318894f4cdd884f4c63837ed409.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ST_4b3d5318894f4cdd884f4c63837ed409.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <BinaryItem
+            Name="ST_4b3d5318894f4cdd884f4c63837ed409.dll">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAABQRQAATAEDAHVsolsAAAAAAAAAAOAAIiALATAAABIAAAAIAAAAAAAATjAA
+AAAgAAAAQAAAAAAAEAAgAAAAAgAABAAAAAAAAAAGAAAAAAAAAACAAAAAAgAAAAAAAAMAYIUAABAA
+ABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAPwvAABPAAAAAEAAAHgEAAAAAAAAAAAAAAAAAAAA
+AAAAAGAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAAVBAAAAAgAAAAEgAAAAIA
+AAAAAAAAAAAAAAAAACAAAGAucnNyYwAAAHgEAAAAQAAAAAYAAAAUAAAAAAAAAAAAAAAAAABAAABA
+LnJlbG9jAAAMAAAAAGAAAAACAAAAGgAAAAAAAAAAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAAAw
+MAAAAAAAAEgAAAACAAUA6CEAAFwNAAABAAAAAAAAAEQvAAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAABswBwARAQAAAQAAERcKAigQAAAKbxEAAAoWcgEAAHByHQAA
+cAIoEAAACm8SAAAKckMAAHBvEwAACm8UAAAKKBUAAAp+FgAAChYSAG8XAAAKAigQAAAKbxIAAApy
+QwAAcG8TAAAKFG8YAAAKcxkAAAoCKBAAAApvEgAACnJzAABwbxMAAApvFAAAChdvGgAACgIoEAAA
+Cm8RAAAKFnIBAABwcocAAHACKBAAAApvEgAACnJzAABwbxMAAApvFAAACigVAAAKfhYAAAoWEgBv
+FwAACgIoEAAAChZvGwAACt48CwIoEAAACm8RAAAKFnIBAABwcrMAAHAHbxwAAAooFQAACn4WAAAK
+Fm8dAAAKJgIoEAAAChdvGwAACt4AKgAAAAEQAAAAAAAA1NQAPA8AAAEeAigeAAAKKh4CKB8AAAoq
+rn4BAAAELR5y1wAAcNADAAACKCAAAApvIQAACnMiAAAKgAEAAAR+AQAABCoafgIAAAQqHgKAAgAA
+BCoafgMAAAQqHgIoIwAACioucwgAAAaAAwAABCoAAEJTSkIBAAEAAAAAAAwAAAB2NC4wLjMwMzE5
+AAAAAAUAbAAAAAQEAAAjfgAAcAQAAPgFAAAjU3RyaW5ncwAAAABoCgAATAEAACNVUwC0CwAAEAAA
+ACNHVUlEAAAAxAsAAJgBAAAjQmxvYgAAAAAAAAACAAABVx2iAQkDAAAA+gEzABYAAAEAAAAhAAAA
+BQAAAAYAAAAJAAAAAQAAACMAAAACAAAAEAAAAAEAAAACAAAAAwAAAAQAAAABAAAABAAAAAEAAAAB
+AAAAAACHAwEAAAAAAAYANQLIBAYAxALIBAYAgQG1BA8APAUAAAYArgEVBAYAGAIVBAYA+QEVBAYA
+qwIVBAYAVQIVBAYAbgIVBAYAxQEVBAYA4AHoAgoAiQI2AwoAAAE2AwYATgS4AwYAvwO4AwYAZAG1
+BAYAwwW4AwYAaAToBAYAWAQABA4ANAFxAw4AlQFxAw4AHAHrAwYASQHIBAoAXwM2AwoAigQ2AxIA
+hwWrABIAeASrAAYAEAO4AxIAOQSrAAYAywC4AwYAegC4AwYA6QUVBAAAAAAlAAAAAAABAAEAAQAQ
+ANADAQA5AAEAAQAAABAA7wRLBUkAAQADAAABEAB6BUsFXQADAAcAAwEAAKMFAABBAAQACgARAMQD
+mQARAPAAnQARAF4AoQAGBk0ApQBWgJMFqABWgNAAqABQIAAAAACGANYDBgABAIAhAAAAAIYYqAQG
+AAEAiCEAAAAAgxioBAYAAQCQIQAAAACTCGQErAABALwhAAAAAJMI2ACxAAEAwyEAAAAAkwjkALYA
+AQDLIQAAAACWCMoFvAACANIhAAAAAIYYqAQGAAIA2iEAAAAAkRiuBMEAAgAAAAEA4gIJAKgEAQAR
+AKgEBgAZAKgECgApAKgEEAAxAKgEEAA5AKgEEABBAKgEEABJAKgEEABRAKgEEABZAKgEEABhAKgE
+EABpAKgEBgCJAKgEBgCxAKgEFQDBAKgEBgBxAJsFIQDJALEFJgDJAIMFKwDZAK8DMADhAAIDNgDp
+ALwFOgDpAPIFQADRANsDQwDhACcETgDxAKgEUwDxAJ4AWADJANYFAQB5AG4ANgDRAJ4EXgBxAKgE
+BgCRAKgEBgD5AIwAZwD5AOUFbwCZAKgEdQC5AKgEBgAIABQAjwAIABgAlAApAHMA/AAuAAsA1AAu
+ABMA3QAuABsA/AAuACMABQEuACsALgEuADMALgEuADsALgEuAEMABQEuAEsANAEuAFMALgEuAFsA
+SwFDAGMAlABJAHMA/ABhAHsAlABjAGsAlAAbAAMAAQAEAAMAAABoBMUAAAD4AMoAAADOBc8AAgAE
+AAMAAgAFAAUAAQAGAAUAAgAHAAcABIAAAAEAAAC0GkI8AAAAAAAAAQAAAAQAAAAAAAAAAAAAAH0A
+VQAAAAAADQAAAAAAAAAAAAAAhgAXAwAAAAAEAAAAAAAAAAAAAAB9ALgDAAAAAA0AAAAAAAAAAAAA
+AIYALgAAAAAAAAAAAAEAAAD5BAAABQACAAAAAFNUXzRiM2Q1MzE4ODk0ZjRjZGQ4ODRmNGM2Mzgz
+N2VkNDA5ADxNb2R1bGU+AE1pY3Jvc29mdC5TcWxTZXJ2ZXIuTWFuYWdlZERUUwB2YWx1ZV9fAG1z
+Y29ybGliAGRlZmF1bHRJbnN0YW5jZQBnZXRfTWVzc2FnZQBSdW50aW1lVHlwZUhhbmRsZQBHZXRU
+eXBlRnJvbUhhbmRsZQBEb3dubG9hZEZpbGUATWljcm9zb2Z0LlNxbFNlcnZlci5EdHMuUnVudGlt
+ZQBUeXBlAEZhaWx1cmUAZ2V0X0N1bHR1cmUAc2V0X0N1bHR1cmUAcmVzb3VyY2VDdWx0dXJlAFZT
+VEFSVFNjcmlwdE9iamVjdE1vZGVsQmFzZQBBcHBsaWNhdGlvblNldHRpbmdzQmFzZQBFZGl0b3JC
+cm93c2FibGVTdGF0ZQBDb21waWxlckdlbmVyYXRlZEF0dHJpYnV0ZQBEZWJ1Z2dlck5vblVzZXJD
+b2RlQXR0cmlidXRlAERlYnVnZ2FibGVBdHRyaWJ1dGUARWRpdG9yQnJvd3NhYmxlQXR0cmlidXRl
+AEFzc2VtYmx5VGl0bGVBdHRyaWJ1dGUAQXNzZW1ibHlUcmFkZW1hcmtBdHRyaWJ1dGUAVGFyZ2V0
+RnJhbWV3b3JrQXR0cmlidXRlAEFzc2VtYmx5Q29uZmlndXJhdGlvbkF0dHJpYnV0ZQBBc3NlbWJs
+eURlc2NyaXB0aW9uQXR0cmlidXRlAENvbXBpbGF0aW9uUmVsYXhhdGlvbnNBdHRyaWJ1dGUAQXNz
+ZW1ibHlQcm9kdWN0QXR0cmlidXRlAEFzc2VtYmx5Q29weXJpZ2h0QXR0cmlidXRlAFNTSVNTY3Jp
+cHRUYXNrRW50cnlQb2ludEF0dHJpYnV0ZQBBc3NlbWJseUNvbXBhbnlBdHRyaWJ1dGUAUnVudGlt
+ZUNvbXBhdGliaWxpdHlBdHRyaWJ1dGUAdmFsdWUAU3lzdGVtLlJ1bnRpbWUuVmVyc2lvbmluZwBn
+ZXRfQ29ubmVjdGlvblN0cmluZwBNaWNyb3NvZnQuU3FsU2VydmVyLlNjcmlwdFRhc2sATWljcm9z
+b2Z0LlNxbFNlcnZlci5EdHMuVGFza3MuU2NyaXB0VGFzawBTY3JpcHRPYmplY3RNb2RlbABTeXN0
+ZW0uQ29tcG9uZW50TW9kZWwAU1RfNGIzZDUzMTg4OTRmNGNkZDg4NGY0YzYzODM3ZWQ0MDkuZGxs
+AGdldF9JdGVtAFN5c3RlbQBFbnVtAHJlc291cmNlTWFuAFNjcmlwdE1haW4ARmlyZUluZm9ybWF0
+aW9uAFN5c3RlbS5Db25maWd1cmF0aW9uAFN5c3RlbS5HbG9iYWxpemF0aW9uAFN5c3RlbS5SZWZs
+ZWN0aW9uAEFjcXVpcmVDb25uZWN0aW9uAEh0dHBDbGllbnRDb25uZWN0aW9uAEV4Y2VwdGlvbgBD
+dWx0dXJlSW5mbwBnZXRfUmVzb3VyY2VNYW5hZ2VyAENvbm5lY3Rpb25NYW5hZ2VyAEV2ZW50c09i
+amVjdFdyYXBwZXIARmlyZUVycm9yAC5jdG9yAC5jY3RvcgBTeXN0ZW0uRGlhZ25vc3RpY3MAU3lz
+dGVtLlJ1bnRpbWUuQ29tcGlsZXJTZXJ2aWNlcwBTeXN0ZW0uUmVzb3VyY2VzAFNUXzRiM2Q1MzE4
+ODk0ZjRjZGQ4ODRmNGM2MzgzN2VkNDA5LlByb3BlcnRpZXMuUmVzb3VyY2VzLnJlc291cmNlcwBE
+ZWJ1Z2dpbmdNb2RlcwBTVF80YjNkNTMxODg5NGY0Y2RkODg0ZjRjNjM4MzdlZDQwOS5Qcm9wZXJ0
+aWVzAFNldHRpbmdzAGdldF9Db25uZWN0aW9ucwBTdWNjZXNzAGdldF9EdHMAU2NyaXB0UmVzdWx0
+cwBnZXRfRXZlbnRzAENvbmNhdABPYmplY3QAZ2V0X0RlZmF1bHQAc2V0X1Rhc2tSZXN1bHQAZ2V0
+X0Fzc2VtYmx5AEVtcHR5AAAbRABvAHcAbgBsAG8AYQBkACAARgBpAGwAZQAAJVMAdABhAHIAdAAg
+AGQAbwB3AG4AbABvAGEAZABpAG4AZwAgAAAvSABUAFQAUAAgAEMAbwBuAG4AZQBjAHQAaQBvAG4A
+IABNAGEAbgBhAGcAZQByAAATUwB0AGEAdABlAEYAaQBsAGUAACtGAGkAbgBpAHMAaABlAGQAIABk
+AG8AdwBuAGwAbwBhAGQAaQBuAGcAIAAAI0QAbwB3AG4AbABvAGEAZAAgAGYAYQBpAGwAZQBkADoA
+IAAAcVMAVABfADQAYgAzAGQANQAzADEAOAA4ADkANABmADQAYwBkAGQAOAA4ADQAZgA0AGMANgAz
+ADgAMwA3AGUAZAA0ADAAOQAuAFAAcgBvAHAAZQByAHQAaQBlAHMALgBSAGUAcwBvAHUAcgBjAGUA
+cwAAAAAAAJRl04Os/0OY2heVYfLNHAAEIAEBCAMgAAEFIAEBEREEIAEBDgUgAQERVQUHAgISPQQg
+ABJlBCAAEmkEIAASbQUgARJxHAMgAA4FAAIODg4CBg4KIAYBCA4ODggQAgQgARwcBCABARwFIAIB
+DgIIIAUCCA4ODggHAAESfRGAgQUgABKAhQcgAgEOEoCFCLd6XFYZNOCJCImEXc2AgMyRBAAAAAAE
+AQAAAAMGEk0DBhJRAwYSEAIGCAMGERQEAAASTQQAABJRBQABARJRBAAAEhADAAABBAgAEk0ECAAS
+UQQIABIQCAEACAAAAAAAHgEAAQBUAhZXcmFwTm9uRXhjZXB0aW9uVGhyb3dzAQgBAAIAAAAAACgB
+ACNTVF80YjNkNTMxODg5NGY0Y2RkODg0ZjRjNjM4MzdlZDQwOQAABQEAAAAAFgEAEUNvcHlyaWdo
+dCBAICAyMDE4AABJAQAaLk5FVEZyYW1ld29yayxWZXJzaW9uPXY0LjUBAFQOFEZyYW1ld29ya0Rp
+c3BsYXlOYW1lEi5ORVQgRnJhbWV3b3JrIDQuNQAAALQAAADOyu++AQAAAJEAAABsU3lzdGVtLlJl
+c291cmNlcy5SZXNvdXJjZVJlYWRlciwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVy
+ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5I1N5c3RlbS5SZXNvdXJj
+ZXMuUnVudGltZVJlc291cmNlU2V0AgAAAAAAAAAAAAAAUEFEUEFEULQAAAAkMAAAAAAAAAAAAAA+
+MAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAAAAAAAAAAAAAAAABfQ29yRGxsTWFpbgBtc2Nv
+cmVlLmRsbAAAAAAA/yUAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAEAEAAAABgAAIAAAAAAAAAAAAAAAAAAAAEAAQAAADAAAIAAAAAAAAAAAAAAAAAAAAEAAAAA
+AEgAAABYQAAAGgQAAAAAAAAAAAAAGgQ0AAAAVgBTAF8AVgBFAFIAUwBJAE8ATgBfAEkATgBGAE8A
+AAAAAL0E7/4AAAEAAAABAEI8tBoAAAEAQjy0Gj8AAAAAAAAABAAAAAIAAAAAAAAAAAAAAAAAAABE
+AAAAAQBWAGEAcgBGAGkAbABlAEkAbgBmAG8AAAAAACQABAAAAFQAcgBhAG4AcwBsAGEAdABpAG8A
+bgAAAAAAAACwBHoDAAABAFMAdAByAGkAbgBnAEYAaQBsAGUASQBuAGYAbwAAAFYDAAABADAAMAAw
+ADAAMAA0AGIAMAAAABoAAQABAEMAbwBtAG0AZQBuAHQAcwAAAAAAAAAiAAEAAQBDAG8AbQBwAGEA
+bgB5AE4AYQBtAGUAAAAAAAAAAABwACQAAQBGAGkAbABlAEQAZQBzAGMAcgBpAHAAdABpAG8AbgAA
+AAAAUwBUAF8ANABiADMAZAA1ADMAMQA4ADgAOQA0AGYANABjAGQAZAA4ADgANABmADQAYwA2ADMA
+OAAzADcAZQBkADQAMAA5AAAAPgAPAAEARgBpAGwAZQBWAGUAcgBzAGkAbwBuAAAAAAAxAC4AMAAu
+ADYAOAAzADYALgAxADUANAAyADYAAAAAAHAAKAABAEkAbgB0AGUAcgBuAGEAbABOAGEAbQBlAAAA
+UwBUAF8ANABiADMAZAA1ADMAMQA4ADgAOQA0AGYANABjAGQAZAA4ADgANABmADQAYwA2ADMAOAAz
+ADcAZQBkADQAMAA5AC4AZABsAGwAAABIABIAAQBMAGUAZwBhAGwAQwBvAHAAeQByAGkAZwBoAHQA
+AABDAG8AcAB5AHIAaQBnAGgAdAAgAEAAIAAgADIAMAAxADgAAAAqAAEAAQBMAGUAZwBhAGwAVABy
+AGEAZABlAG0AYQByAGsAcwAAAAAAAAAAAHgAKAABAE8AcgBpAGcAaQBuAGEAbABGAGkAbABlAG4A
+YQBtAGUAAABTAFQAXwA0AGIAMwBkADUAMwAxADgAOAA5ADQAZgA0AGMAZABkADgAOAA0AGYANABj
+ADYAMwA4ADMANwBlAGQANAAwADkALgBkAGwAbAAAAGgAJAABAFAAcgBvAGQAdQBjAHQATgBhAG0A
+ZQAAAAAAUwBUAF8ANABiADMAZAA1ADMAMQA4ADgAOQA0AGYANABjAGQAZAA4ADgANABmADQAYwA2
+ADMAOAAzADcAZQBkADQAMAA5AAAAQgAPAAEAUAByAG8AZAB1AGMAdABWAGUAcgBzAGkAbwBuAAAA
+MQAuADAALgA2ADgAMwA2AC4AMQA1ADQAMgA2AAAAAABGAA8AAQBBAHMAcwBlAG0AYgBsAHkAIABW
+AGUAcgBzAGkAbwBuAAAAMQAuADAALgA2ADgAMwA2AC4AMQA1ADQAMgA2AAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAADAAAAFAwAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</BinaryItem>
+        </ScriptProject>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load into Staging"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0A365169-9EA3-4B3F-8BC1-42AA0E35DEB5}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load into Staging"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load into Staging\Flat File Source"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="1033"
+              name="Flat File Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load into Staging\Flat File Source.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[StateSource]"
+                  connectionManagerRefId="Package.ConnectionManagers[StateSource]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[BusinessName]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[BusinessName]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[BusinessName]"
+                      name="BusinessName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseNumber]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseNumber]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseNumber]"
+                      name="ContractorLicenseNumber"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseTypeCode]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseTypeCode]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseTypeCode]"
+                      name="ContractorLicenseTypeCode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseTypeCodeDesc]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseTypeCodeDesc]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseTypeCodeDesc]"
+                      name="ContractorLicenseTypeCodeDesc"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[Address1]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Address1]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[Address1]"
+                      name="Address1"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[Address2]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Address2]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[Address2]"
+                      name="Address2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[City]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[City]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[State]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[State]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[State]"
+                      name="State"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[Zip]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Zip]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[Zip]"
+                      name="Zip"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[PhoneNumber]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[PhoneNumber]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[PhoneNumber]"
+                      name="PhoneNumber"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[LicenseEffectiveDate]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[LicenseEffectiveDate]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[LicenseEffectiveDate]"
+                      name="LicenseEffectiveDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[LicenseExpirationDate]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[LicenseExpirationDate]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[LicenseExpirationDate]"
+                      name="LicenseExpirationDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[BusinessTypeCode]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[BusinessTypeCode]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[BusinessTypeCode]"
+                      name="BusinessTypeCode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[BusinessTypeCodeDesc]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[BusinessTypeCodeDesc]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[BusinessTypeCodeDesc]"
+                      name="BusinessTypeCodeDesc"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode1]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[SpecialtyCode1]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode1]"
+                      name="SpecialtyCode1"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode1Desc]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[SpecialtyCode1Desc]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode1Desc]"
+                      name="SpecialtyCode1Desc"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode2]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[SpecialtyCode2]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode2]"
+                      name="SpecialtyCode2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode2Desc]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[SpecialtyCode2Desc]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode2Desc]"
+                      name="SpecialtyCode2Desc"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[UBI]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[UBI]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[UBI]"
+                      name="UBI"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[PrimaryPrincipalName]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[PrimaryPrincipalName]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[PrimaryPrincipalName]"
+                      name="PrimaryPrincipalName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[StatusCode]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[StatusCode]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[StatusCode]"
+                      name="StatusCode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseStatus]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseStatus]"
+                      length="50"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseStatus]"
+                      name="ContractorLicenseStatus"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseSuspendDate]"
+                      codePage="65001"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseSuspendDate]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseSuspendDate]"
+                      name="ContractorLicenseSuspendDate"
+                      truncationRowDisposition="IgnoreFailure">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[BusinessName]"
+                      dataType="nText"
+                      name="BusinessName" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseNumber]"
+                      dataType="nText"
+                      name="ContractorLicenseNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseTypeCode]"
+                      dataType="nText"
+                      name="ContractorLicenseTypeCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseTypeCodeDesc]"
+                      dataType="nText"
+                      name="ContractorLicenseTypeCodeDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Address1]"
+                      dataType="nText"
+                      name="Address1" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Address2]"
+                      dataType="nText"
+                      name="Address2" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[City]"
+                      dataType="nText"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[State]"
+                      dataType="nText"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Zip]"
+                      codePage="65001"
+                      dataType="text"
+                      name="Zip" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[PhoneNumber]"
+                      dataType="numeric"
+                      name="PhoneNumber"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[LicenseEffectiveDate]"
+                      dataType="dbTimeStamp"
+                      name="LicenseEffectiveDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[LicenseExpirationDate]"
+                      dataType="dbTimeStamp"
+                      name="LicenseExpirationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[BusinessTypeCode]"
+                      dataType="nText"
+                      name="BusinessTypeCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[BusinessTypeCodeDesc]"
+                      dataType="nText"
+                      name="BusinessTypeCodeDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[SpecialtyCode1]"
+                      dataType="nText"
+                      name="SpecialtyCode1" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[SpecialtyCode1Desc]"
+                      dataType="nText"
+                      name="SpecialtyCode1Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[SpecialtyCode2]"
+                      dataType="nText"
+                      name="SpecialtyCode2" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[SpecialtyCode2Desc]"
+                      dataType="nText"
+                      name="SpecialtyCode2Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[UBI]"
+                      dataType="numeric"
+                      name="UBI"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[PrimaryPrincipalName]"
+                      dataType="nText"
+                      name="PrimaryPrincipalName" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[StatusCode]"
+                      dataType="nText"
+                      name="StatusCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseStatus]"
+                      dataType="nText"
+                      name="ContractorLicenseStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[ContractorLicenseSuspendDate]"
+                      dataType="dbTimeStamp"
+                      name="ContractorLicenseSuspendDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="65001"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load into Staging\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[LNI_STAGING]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">65001</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load into Staging\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[EnerGov]"
+                  connectionManagerRefId="Package.ConnectionManagers[EnerGov]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BusinessName]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="BusinessName"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BusinessName]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[BusinessName]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ContractorLicenseNumber]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ContractorLicenseNumber"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseNumber]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseNumber]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ContractorLicenseTypeCode]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ContractorLicenseTypeCode"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseTypeCode]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseTypeCode]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ContractorLicenseTypeCodeDesc]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ContractorLicenseTypeCodeDesc"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseTypeCodeDesc]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseTypeCodeDesc]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Address1]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Address1"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address1]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[Address1]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Address2]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Address2"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address2]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[Address2]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[City]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="City"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[City]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[State]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="State"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[State]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Zip]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Zip"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Zip]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[Zip]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PhoneNumber]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PhoneNumber"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PhoneNumber]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[PhoneNumber]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LicenseEffectiveDate]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LicenseEffectiveDate"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LicenseEffectiveDate]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[LicenseEffectiveDate]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LicenseExpirationDate]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LicenseExpirationDate"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LicenseExpirationDate]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[LicenseExpirationDate]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BusinessTypeCode]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="BusinessTypeCode"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BusinessTypeCode]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[BusinessTypeCode]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BusinessTypeCodeDesc]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="BusinessTypeCodeDesc"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BusinessTypeCodeDesc]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[BusinessTypeCodeDesc]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SpecialtyCode1]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SpecialtyCode1"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialtyCode1]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode1]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SpecialtyCode1Desc]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SpecialtyCode1Desc"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialtyCode1Desc]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode1Desc]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SpecialtyCode2]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SpecialtyCode2"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialtyCode2]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode2]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SpecialtyCode2Desc]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SpecialtyCode2Desc"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialtyCode2Desc]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[SpecialtyCode2Desc]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[UBI]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="UBI"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UBI]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[UBI]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PrimaryPrincipalName]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="PrimaryPrincipalName"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryPrincipalName]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[PrimaryPrincipalName]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[StatusCode]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="StatusCode"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StatusCode]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[StatusCode]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ContractorLicenseStatus]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ContractorLicenseStatus"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseStatus]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseStatus]" />
+                    <inputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ContractorLicenseSuspendDate]"
+                      cachedCodepage="65001"
+                      cachedDataType="text"
+                      cachedName="ContractorLicenseSuspendDate"
+                      externalMetadataColumnId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseSuspendDate]"
+                      lineageId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output].Columns[ContractorLicenseSuspendDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BusinessName]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="BusinessName" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseNumber]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="ContractorLicenseNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseTypeCode]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="ContractorLicenseTypeCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseTypeCodeDesc]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="ContractorLicenseTypeCodeDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address1]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="Address1" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address2]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="Address2" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Zip]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="Zip" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PhoneNumber]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="PhoneNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LicenseEffectiveDate]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="LicenseEffectiveDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LicenseExpirationDate]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="LicenseExpirationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BusinessTypeCode]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="BusinessTypeCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BusinessTypeCodeDesc]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="BusinessTypeCodeDesc" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialtyCode1]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="SpecialtyCode1" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialtyCode1Desc]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="SpecialtyCode1Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialtyCode2]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="SpecialtyCode2" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialtyCode2Desc]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="SpecialtyCode2Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UBI]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="UBI" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryPrincipalName]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="PrimaryPrincipalName" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[StatusCode]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="StatusCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseStatus]"
+                      codePage="65001"
+                      dataType="str"
+                      length="250"
+                      name="ContractorLicenseStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContractorLicenseSuspendDate]"
+                      codePage="65001"
+                      dataType="text"
+                      name="ContractorLicenseSuspendDate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load into Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load into Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load into Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load into Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load into Staging.Paths[Flat File Source Output]"
+              endId="Package\Load into Staging\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Flat File Source Output"
+              startId="Package\Load into Staging\Flat File Source.Outputs[Flat File Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Staging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BD9E8FC0-CB2E-47DB-A465-8E2BAA2F3644}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{23EF3DBD-94E8-4230-9D8A-8F4CE68F4525}"
+          SQLTask:SqlStatementSource="Truncate Table LNI_Staging" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Certs"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{08C803FF-DDA1-45DC-B0B4-874AA5ECC16E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Certs"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{23EF3DBD-94E8-4230-9D8A-8F4CE68F4525}"
+          SQLTask:SqlStatementSource="exec USP_updateCerts" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{57B2F8CE-A3B5-4390-A3AF-5490A8ADC22E}"
+      DTS:From="Package\Truncate Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Download file" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{F54DB09F-B9A4-4B78-A0F3-3D605D8E97AA}"
+      DTS:From="Package\Download file"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load into Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{8D2EA5B8-57DE-4E04-9C7B-ACDC17EB838C}"
+      DTS:From="Package\Load into Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Update Certs" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{A8ADC7E8-19BB-4328-9E60-D8ED49E04455}"
+      DTS:From="Package\Download file"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Download file 1"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{D0D64AC2-F1DF-4C6A-BF7D-F5AB21E0A1D9}"
+      DTS:From="Package\Download file 1"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Load into Staging" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Download file"
+          TopLeft="99.9999985098842,117.233331248959" />
+        <NodeLayout
+          Size="176,42.6666666666667"
+          Id="Package\Load into Staging"
+          TopLeft="197.99999711911,244.399995629788" />
+        <NodeLayout
+          Size="148,42"
+          Id="Package\Truncate Staging"
+          TopLeft="96.2499985657633,41.3999992716313" />
+        <NodeLayout
+          Size="141.333333333334,42.6666666666667"
+          Id="Package\Update Certs"
+          TopLeft="218.333330079913,333.233327374657" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="171.124998537824,83.3999992716313">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.8333319773275"
+              Start="0,0"
+              End="0,26.3333319773275">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.3333319773275" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="171.999998509884,159.233331248959">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="85.9999986092255,85.1666643808292"
+              Start="0,0"
+              End="85.9999986092255,77.6666643808292">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.639638280493" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,46.639638280493"
+                    Point2="0,50.639638280493"
+                    Point3="4,50.639638280493" />
+                  <mssgle:LineSegment
+                    End="81.9999986092255,50.639638280493" />
+                  <mssgle:CubicBezierSegment
+                    Point1="81.9999986092255,50.639638280493"
+                    Point2="85.9999986092255,50.639638280493"
+                    Point3="85.9999986092255,54.639638280493" />
+                  <mssgle:LineSegment
+                    End="85.9999986092255,77.6666643808292" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="287.499996932845,287.066662296455">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.1666650782021"
+              Start="0,0"
+              End="0,38.6666650782021">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.6666650782021" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="153.333333333334,42.6666666666667"
+          Id="Package\Download file 1"
+          TopLeft="285.416662413627,121.766664489309" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="243.999998509884,140.666664535801">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="41.4166639037428,0"
+              Start="0,0"
+              End="33.9166639037428,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="33.9166639037428,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="1.71698429562139,5,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="362.083329080294,164.433331155976">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-48.0833319611839,79.9666644738122"
+              Start="0,0"
+              End="-48.0833319611839,72.4666644738122">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5477464438883" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43.5477464438883"
+                    Point2="0,47.5477464438883"
+                    Point3="-4,47.5477464438883" />
+                  <mssgle:LineSegment
+                    End="-44.0833319611839,47.5477464438883" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-44.0833319611839,47.5477464438883"
+                    Point2="-48.0833319611839,47.5477464438883"
+                    Point3="-48.0833319611839,51.5477464438883" />
+                  <mssgle:LineSegment
+                    End="-48.0833319611839,72.4666644738122" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Try again ! "
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="86.6666666666667,60"
+          Id="61e1d526-a0bb-4e71-8330-fc76e68456c2"
+          TopLeft="313.749995324761,91.8999990004301" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load into Staging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Load into Staging\OLE DB Destination"
+          TopLeft="279.999995827675,329.766660769979" />
+        <NodeLayout
+          Size="152,42.6666666666667"
+          Id="Package\Load into Staging\Flat File Source"
+          TopLeft="289.916668932885,214.400001673699" />
+        <EdgeLayout
+          Id="Package\Load into Staging.Paths[Flat File Source Output]"
+          TopLeft="365.95833238028,257.066668340365">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72.6999924296137"
+              Start="0,0"
+              End="0,65.1999924296137">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,65.1999924296137" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load into Staging\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
